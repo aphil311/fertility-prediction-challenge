@@ -22,9 +22,9 @@ import joblib
 import training
 
 # loading data (predictors)
-train = pd.read_csv("../training_data/PreFer_train_data.csv", low_memory = False) 
+# train = pd.read_csv("../training_data/PreFer_train_data.csv", low_memory = False) 
 # loading the outcome
-outcome = pd.read_csv("../training_data/PreFer_train_outcome.csv")
+# outcome = pd.read_csv("../training_data/PreFer_train_outcome.csv")
 
 
 def clean_df(df, background_df=None):
@@ -79,11 +79,11 @@ def clean_df(df, background_df=None):
 
     return df
 
-train_cleaned = clean_df(train)
+# train_cleaned = clean_df(train)
 # training and saving the model
-training.train_save_model(train_cleaned, outcome)
+# training.train_save_model(train_cleaned, outcome)
 
-fake = pd.read_csv("PreFer_fake_data.csv") 
+# fake = pd.read_csv("PreFer_fake_data.csv") 
 
 def predict_outcomes(df, background_df=None, model_path="model.joblib"):
     """Generate predictions using the saved model and the input dataframe.
@@ -130,4 +130,4 @@ def predict_outcomes(df, background_df=None, model_path="model.joblib"):
     # Return only dataset with predictions and identifier
     return df_predict
 
-print(predict_outcomes(fake))
+# print(predict_outcomes(fake))
