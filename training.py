@@ -7,6 +7,9 @@ but the resulting model model.joblib will be applied to the holdout data.
 It is important to document your training steps here, including seed, 
 number of folds, model, et cetera
 """
+import pandas as pd
+import joblib
+from sklearn.linear_model import LogisticRegression
 
 def train_save_model(cleaned_df, outcome_df):
     """
@@ -18,7 +21,7 @@ def train_save_model(cleaned_df, outcome_df):
     """
     
     ## This script contains a bare minimum working example
-    random.seed(1) # not useful here because logistic regression deterministic
+    # random.seed(1) # not useful here because logistic regression deterministic
     
     # Combine cleaned_df and outcome_df
     model_df = pd.merge(cleaned_df, outcome_df, on="nomem_encr")
@@ -30,7 +33,8 @@ def train_save_model(cleaned_df, outcome_df):
     model = LogisticRegression()
 
     # Fit the model
-    model.fit(model_df[['woning'], ['belbezig'], ['brutoink'], ['nettoink'], ['brutocat'], ['nettocat'], ['oplzon'], ['oplmet'], ['simpc'], ['brutoink_f'], ['netic'], ['nettoink_f'], ['brutohh_f'], ['nettohh_h']], model_df['new_child']) # <------- ADDED VARIABLE
+    # model.fit(model_df[['woning', 'belbezig', 'brutoink', 'nettoink', 'brutocat', 'nettocat', 'oplzon', 'oplmet', 'simpc', 'brutoink_f', 'netic', 'nettoink_f', 'brutohh_f', 'nettohh_h']], model_df['new_child']) # <------- ADDED VARIABLE
+    model.fit(model_df[['woning_2020', 'belbezig_2020', 'oplzon_2020', 'nettoink_f_2020']], model_df['new_child']) # <------- ADDED VARIABLE
 
     # Save the model
     joblib.dump(model, "model.joblib")

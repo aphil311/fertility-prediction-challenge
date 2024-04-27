@@ -19,6 +19,7 @@ run.py can be used to test your submission.
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 import joblib
+import training
 
 # loading data (predictors)
 train = pd.read_csv("../training_data/PreFer_train_data.csv", low_memory = False) 
@@ -45,32 +46,42 @@ def clean_df(df, background_df=None):
 
     # Imputing missing values in age with the mean
     # df["age"] = df["age"].fillna(df["age"].mean())
+    df["woning_2020"] = df["woning_2020"].fillna(df["woning_2020"].mean())
+    df["belbezig_2020"] = df["belbezig_2020"].fillna(df["belbezig_2020"].mean())
+    df["oplzon_2020"] = df["oplzon_2020"].fillna(df["oplzon_2020"].mean())
+    df["nettoink_f_2020"] = df["nettoink_f_2020"].fillna(df["nettoink_f_2020"].mean())
+
 
     # Selecting variables for modelling
     keepcols = [
         "nomem_encr",  # ID variable required for predictions,
         # "age",         # newly created variable
-        "woning",       # 
-        "belbezig",      # Primary occupation
-        "brutoink",      # Personal gross monthly income in Euros
-        "nettoink",      # Personal net monthly income in Euros (incl. nettocat)
-        "brutocat",      # Personal gross monthly income in categories
-        "nettocat",      # Personal net monthly income in categories
-        "oplzon",        # Highest level of education irrespective of diploma
-        "oplmet",        # Highest level of education with diploma
-        "oplcat",        # Level of education in CBS (Statistics Netherlands) categories
-        "simpc",         # does the household have a simpc
-        "brutoink_f",    # Personal gross monthly income in Euros, imputed
-        "netinc",        # Personal net monthly income in Euros
-        "nettoink_f",    # Personal net monthly income in Euros, imputed
-        "brutohh_f",     # Gross household income in Euros
-        "nettohh_f",     # Net household income in Euros
+        "woning_2020",       # 
+        "belbezig_2020",      # Primary occupation
+        # "brutoink",      # Personal gross monthly income in Euros
+        # "nettoink",      # Personal net monthly income in Euros (incl. nettocat)
+        # "brutocat",      # Personal gross monthly income in categories
+        # "nettocat",      # Personal net monthly income in categories
+        "oplzon_2020",        # Highest level of education irrespective of diploma
+        # "oplmet",        # Highest level of education with diploma
+        # "oplcat",        # Level of education in CBS (Statistics Netherlands) categories
+        # "simpc",         # does the household have a simpc
+        # "brutoink_f",    # Personal gross monthly income in Euros, imputed
+        # "netinc",        # Personal net monthly income in Euros
+        "nettoink_f_2020",    # Personal net monthly income in Euros, imputed
+        # "brutohh_f",     # Gross household income in Euros
+        # "nettohh_f",     # Net household income in Euros
+        # "gender_bg"
     ] 
 
     # Keeping data with variables selected
     df = df[keepcols]
 
     return df
+
+train_cleaned = clean_df(train)
+# training and saving the model
+training.train_save_model(train_cleaned, outcome)
 
 fake = pd.read_csv("PreFer_fake_data.csv") 
 
