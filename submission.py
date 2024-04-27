@@ -41,16 +41,30 @@ def clean_df(df, background_df=None):
 
     ## This script contains a bare minimum working example
     # Create new variable with age
-    df["age"] = 2024 - df["birthyear_bg"]
+    # df["age"] = 2024 - df["birthyear_bg"]
 
     # Imputing missing values in age with the mean
-    df["age"] = df["age"].fillna(df["age"].mean())
+    # df["age"] = df["age"].fillna(df["age"].mean())
 
     # Selecting variables for modelling
     keepcols = [
         "nomem_encr",  # ID variable required for predictions,
-        "age",         # newly created variable
-        # "gender_bg"    # gender
+        # "age",         # newly created variable
+        "woning",       # 
+        "belbezig",      # Primary occupation
+        "brutoink",      # Personal gross monthly income in Euros
+        "nettoink",      # Personal net monthly income in Euros (incl. nettocat)
+        "brutocat",      # Personal gross monthly income in categories
+        "nettocat",      # Personal net monthly income in categories
+        "oplzon",        # Highest level of education irrespective of diploma
+        "oplmet",        # Highest level of education with diploma
+        "oplcat",        # Level of education in CBS (Statistics Netherlands) categories
+        "simpc",         # does the household have a simpc
+        "brutoink_f",    # Personal gross monthly income in Euros, imputed
+        "netinc",        # Personal net monthly income in Euros
+        "nettoink_f",    # Personal net monthly income in Euros, imputed
+        "brutohh_f",     # Gross household income in Euros
+        "nettohh_f",     # Net household income in Euros
     ] 
 
     # Keeping data with variables selected
