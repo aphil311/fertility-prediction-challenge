@@ -20,6 +20,11 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 import joblib
 
+# loading data (predictors)
+train = pd.read_csv("../training_data/PreFer_train_data.csv", low_memory = False) 
+# loading the outcome
+outcome = pd.read_csv("../training_data/PreFer_train_outcome.csv")
+
 
 def clean_df(df, background_df=None):
     """
@@ -44,7 +49,8 @@ def clean_df(df, background_df=None):
     # Selecting variables for modelling
     keepcols = [
         "nomem_encr",  # ID variable required for predictions,
-        "age"          # newly created variable
+        "age",         # newly created variable
+        # "gender_bg"    # gender
     ] 
 
     # Keeping data with variables selected
@@ -52,6 +58,7 @@ def clean_df(df, background_df=None):
 
     return df
 
+fake = pd.read_csv("PreFer_fake_data.csv") 
 
 def predict_outcomes(df, background_df=None, model_path="model.joblib"):
     """Generate predictions using the saved model and the input dataframe.
@@ -97,3 +104,5 @@ def predict_outcomes(df, background_df=None, model_path="model.joblib"):
 
     # Return only dataset with predictions and identifier
     return df_predict
+
+print(predict_outcomes(fake))
